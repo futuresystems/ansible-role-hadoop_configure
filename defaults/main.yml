@@ -1,6 +1,6 @@
 ---
 
-hadoop_cfg_path: "/etc/hadoop"
+hadoop_cfg_path: "/opt/hadoop/etc/hadoop"
 hadoop_user: hadoop
 hadoop_group: hadoop
 

@@ -11,7 +11,6 @@
 
 
 - name: clear configuration
-  when: clear_configs | length > 0
   copy:
     src: empty-site.xml
     dest: "{{ hadoop_cfg_path }}/{{ item }}"
@@ -24,10 +23,11 @@
 
 
 - name: configure core-site.xml
-  when: core_site | length > 0
-  template:
-    src: core-site.xml.j2
+  lineinfile:
     dest: "{{ hadoop_cfg_path }}/core-site.xml"
+    insertbefore: "</configuration>"
+    line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
+  with_dict: core_site
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -36,10 +36,11 @@
 
 
 - name: configure hdfs-site.xml
-  when: hdfs_site | length > 0
-  template:
-    src: hdfs-site.xml.j2
+  lineinfile:
     dest: "{{ hadoop_cfg_path }}/hdfs-site.xml"
+    insertbefore: "</configuration>"
+    line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
+  with_dict: hdfs_site
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -48,10 +49,11 @@
 
 
 - name: configure yarn-site.xml
-  when: yarn_site | length > 0
-  template:
-    src: yarn-site.xml.j2
+  lineinfile:
     dest: "{{ hadoop_cfg_path }}/yarn-site.xml"
+    insertbefore: "</configuration>"
+    line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
+  with_dict: yarn_site
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -60,10 +62,11 @@
 
 
 - name: configure mapred-site.xml
-  when: mapred_site | length > 0
-  template:
-    src: mapred-site.xml.j2
+  lineinfile:
     dest: "{{ hadoop_cfg_path }}/mapred-site.xml"
+    insertbefore: "</configuration>"
+    line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
+  with_dict: mapred_site
   notify: fix permissions
   tags: 
     - hadoop_configure
