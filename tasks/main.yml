@@ -14,7 +14,7 @@
   copy:
     src: empty-site.xml
     dest: "{{ hadoop_cfg_path }}/{{ item }}"
-  with_items: clear_configs
+  with_items: "{{ clear_configs }}"
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -27,7 +27,7 @@
     dest: "{{ hadoop_cfg_path }}/core-site.xml"
     insertbefore: "</configuration>"
     line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
-  with_dict: core_site
+  with_dict: "{{ core_site }}"
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -40,7 +40,7 @@
     dest: "{{ hadoop_cfg_path }}/hdfs-site.xml"
     insertbefore: "</configuration>"
     line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
-  with_dict: hdfs_site
+  with_dict: "{{ hdfs_site }}"
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -53,7 +53,7 @@
     dest: "{{ hadoop_cfg_path }}/yarn-site.xml"
     insertbefore: "</configuration>"
     line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
-  with_dict: yarn_site
+  with_dict: "{{ yarn_site }}"
   notify: fix permissions
   tags: 
     - hadoop_configure
@@ -66,7 +66,7 @@
     dest: "{{ hadoop_cfg_path }}/mapred-site.xml"
     insertbefore: "</configuration>"
     line: "  <property>\n    <name>{{ item.key }}</name>\n    <value>{{ item.value }}</value>\n  </property>\n"
-  with_dict: mapred_site
+  with_dict: "{{ mapred_site }}"
   notify: fix permissions
   tags: 
     - hadoop_configure
